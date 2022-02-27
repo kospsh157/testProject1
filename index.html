@@ -1,0 +1,44 @@
+<!-- 첫번째: 헤더 및 푸터 컨텐츠 레이아웃 만들기 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mini TodoList</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+    <link rel="stylesheet" href="/style/mainCss.css" />
+    <script type="module" src="./dist/app.js" defer></script>
+  </head>
+  <body>
+    <script>
+      window.onload = function () {
+        Particles.init({
+          selector: ".background",
+          color: "#0eb5f2",
+          connectParticles: true,
+        });
+      };
+    </script>
+    <div class="app">
+      <header class="banner">
+        <h1 class="bannerTitle">TodoList</h1>
+        <ul class="controlPanel">
+          <li><button id="newImage" class="create">Image</button></li>
+          <li><button id="newVideo" class="create">Video</button></li>
+          <li><button id="newNote" class="create">Note</button></li>
+          <li><button id="newTodo" class="create">Todo</button></li>
+        </ul>
+      </header>
+
+      <main class="document"></main>
+      <footer class="footer">
+        <p>© Copyright by Sungho. All rights reserved.</p>
+      </footer>
+    </div>
+    <canvas class="background"></canvas>
+    <script src="path/to/particles.min.js"></script>
+  </body>
+</html>

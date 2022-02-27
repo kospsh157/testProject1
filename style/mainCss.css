@@ -1,0 +1,45 @@
+:root {
+  --bg-main-color: #0eb5f2;
+  --border-color: #f2c43d;
+}
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.background {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+body {
+  font-family: Roboto Oxygen, sans-serif;
+  display: flex;
+  justify-content: center; /* 중앙 정렬 */
+  height: 100vh;
+  overflow: hidden;
+  font-size: 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  padding-left: 0;
+}
+
+.app {
+  width: 100%;
+  max-width: 1000px; /* 꽉찬 가로를 유지하다가, 1000px이 넘어가면 더이상 커지지 않는다. */
+  height: 100%;
+  display: flex; /* 한 줄에 하나씩 나오도록  */
+  flex-direction: column; /* 한 줄에 컬럼 하나씩 차지하도록 */
+}
+.footer {
+  background: var(--bg-main-color);
+  border-top: 1px solid var(--border-color);
+  text-align: center; /* 안에 있는 텍스트만 가운데 정렬 */
+}
