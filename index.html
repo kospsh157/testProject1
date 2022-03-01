@@ -1,5 +1,3 @@
-<!-- 첫번째: 헤더 및 푸터 컨텐츠 레이아웃 만들기 -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -10,7 +8,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
     <link rel="stylesheet" href="/style/mainCss.css" />
-    <script type="module" src="./dist/app.js" defer></script>
+    <script type="module" src="/dist/App.js" defer></script>
+    <!-- 스크립트 .js파일을 불러올때, 로컬상으로는 대소문자를 가리지 않는다. -->
   </head>
   <body>
     <script>
@@ -26,14 +25,15 @@
       <header class="banner">
         <h1 class="bannerTitle">TodoList</h1>
         <ul class="controlPanel">
-          <li><button id="newImage" class="create">Image</button></li>
-          <li><button id="newVideo" class="create">Video</button></li>
-          <li><button id="newNote" class="create">Note</button></li>
-          <li><button id="newTodo" class="create">Todo</button></li>
+          <li><button id="newImage" class="createBtn">Image</button></li>
+          <li><button id="newVideo" class="createBtn">Video</button></li>
+          <li><button id="newNote" class="createBtn">Note</button></li>
+          <li><button id="newTodo" class="createBtn">Todo</button></li>
         </ul>
       </header>
 
       <main class="document"></main>
+
       <footer class="footer">
         <p>© Copyright by Sungho. All rights reserved.</p>
       </footer>

@@ -1,10 +1,31 @@
 :root {
   --bg-main-color: #0eb5f2;
   --border-color: #f2c43d;
+  --document-bg-color: #3e9cbf;
+  --bg-accent-color: #f26d50;
+  --smokeywhite: #dddbd8;
+  --text-accent-color: #f17c37;
 }
+
 html {
   margin: 0;
   padding: 0;
+}
+
+p {
+  color: var(--smokeywhite);
+}
+
+label {
+  color: var(--text-accent-color);
+}
+
+* {
+  outline: 0; /* 요소의 보더라인 보다 더 바깥쪽 라인을 의미한다. */
+  box-sizing: border-box; /* 실제 요소의 가로 높이를 정할때, 패딩과 보더를 포함할지 안할지 정할 수 있다. */
+  /* 여기서는 border-box로 보더,패딩을 모두 합쳐 가로 높이를 정한다. 기본적으로 이 옵션을 많이 사용한다.
+  다른 옵션으로는 default로 content-box가 있는데 이것은 기본적으로 적용되므로 이 옵션을 쓸 때는 일반적으로 사용하지 않는다.
+  */
 }
 
 .background {
@@ -18,7 +39,7 @@ html {
 body {
   font-family: Roboto Oxygen, sans-serif;
   display: flex;
-  justify-content: center; /* 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
   height: 100vh;
   overflow: hidden;
   font-size: 1.25rem;
@@ -38,8 +59,60 @@ li {
   display: flex; /* 한 줄에 하나씩 나오도록  */
   flex-direction: column; /* 한 줄에 컬럼 하나씩 차지하도록 */
 }
+
 .footer {
-  background: var(--bg-main-color);
+  background: var(--bg-main-color); /* 해당 전체 요소의 배경색깔 */
   border-top: 1px solid var(--border-color);
   text-align: center; /* 안에 있는 텍스트만 가운데 정렬 */
+}
+
+.banner {
+  background: var(--bg-main-color);
+  border-bottom: 1px solid var(--bg-accent-color); /* 베너 밑에 가로선을 긋는 시각적 효과를 보여준다. */
+  text-align: center;
+}
+
+.bannerTitle {
+  margin: 20px;
+  color: var(--bg-accent-color);
+}
+
+.controlPanel {
+  display: flex; /* flex로 하면 한 줄을 모두 차지하면서 붙어 있게 한다.(콘텐츠 크기는 플레스블하게 한줄에 꽉 차도록 자동 조절된다.) */
+  align-items: center; /* 세로 정렬이다. 근데 여기선 지워도 변함은 없다. */
+  justify-content: center; /* 가로 정렬이다. 여기서는 센터로 오도록 한다. */
+}
+
+.createBtn {
+  margin: 0.1em 0.2em; /* 2개의 밸류를 넣으면 첫번째 밸류가 top과 bottom이다. */
+  text-align: center; /* 버튼 안에 글씨 중간 정렬 그러나 여기선 상속된것이 있어서 없어도 차이는 없음. */
+  user-select: none; /* 사용자가 마우스로 드래깅을 할 수 없도록 방지함. */
+  padding: 1em 3em;
+  text-transform: uppercase; /* 버튼 안에 텍스트를 모두 대문자로 */
+  font-weight: 600; /* 글씨 두깨를 조절한다. */
+  font-size: 0.8rem;
+  color: white; /* 글씨 색깔 */
+  background-color: var(--bg-accent-color);
+  border-color: var(--bg-accent-color);
+  border-radius: 2px; /* 모서리 부분을 둥글게 처리한다. */
+}
+
+.document {
+  height: 100%;
+  background-color: var(--document-bg-color);
+  /* Firefox */
+  scrollbar-width: 6px;
+  scrollbar-color: var(--bg-accent-color);
+  scrollbar-face-color: var(--bg-accent-color);
+}
+/*  파이어폭스는 바로 스크롤바에 대해 적용이 가능하지만, 사파리와 크롬에는 추가로 에프터 슈도로 추가해줘야 한다. */
+.document::-webkit-scrollbar {
+  /* Safari and Chrome */
+  background-color: var(--bg-accent-color);
+  width: 6px;
+}
+
+.document::-webkit-scrollbar-thumb {
+  /* Safari and Chrome */
+  background-color: var(--bg-accent-color);
 }
