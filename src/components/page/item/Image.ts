@@ -26,13 +26,13 @@
 //     parent.insertAdjacentElement(position, this.element);
 //   }
 // }
-import { BaseComponent } from "../baseComponent.js";
+import { BaseComponent } from "../../baseComponent.js";
 // Refactoring
 export class Image extends BaseComponent<HTMLElement> {
   constructor(url: string, title: string) {
     super(
       '<section class="image"><div class="imageHolder">\
-      <img class= "imageThumbnail" /> </div><p class="imageTitle"></p > </section>'
+      <img class= "imageThumbnail" /> </div><h2 class="imageTitle"></ h2> </section>'
     );
 
     const imageElement = this.element.querySelector(
