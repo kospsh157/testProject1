@@ -26,8 +26,9 @@
 //     parent.insertAdjacentElement(position, this.element);
 //   }
 // }
-import { BaseComponent } from "../../baseComponent.js";
+
 // Refactoring
+import { BaseComponent } from "../../BaseComponent.js";
 export class Image extends BaseComponent<HTMLElement> {
   constructor(url: string, title: string) {
     super(

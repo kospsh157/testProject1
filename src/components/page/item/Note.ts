@@ -1,9 +1,9 @@
-import { BaseComponent } from "../../baseComponent.js";
+import { BaseComponent } from "../../BaseComponent.js";
 
 export class Note extends BaseComponent<HTMLElement> {
   constructor(title: string, body: string) {
     super(
-      '<section>\
+      '<section class="note">\
         <h2 class="noteTitle"></h2>\
         <p class="noteBody"></p>\
     </section>'

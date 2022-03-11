@@ -1,23 +1,36 @@
 import { Page } from "./components/page/Page.js"; // 지금은 따로 리액트나 다른 프레임워크를 쓰지 않고 있기 때문에, 확장자명 .js까지 적어줘야한다.
 import { Image } from "./components/page/item/Image.js";
 import { Note } from "./components/page/item/Note.js";
+import { Todo } from "./components/page/item/Todo.js";
+import { Youtube } from "./components/page/item/Youtube.js";
 
 // 이 파일은 스타트 포인트가 될 파일이다.
 class App {
   private readonly page: Page;
-  private readonly img: Image;
-  private readonly note: Note;
 
   constructor(appRoot: HTMLElement) {
     this.page = new Page();
     this.page.attachTo(appRoot); // 여기서 appRoot는 index.html의 .documnet클래스이다. 즉 가장 페이지를 표시해준 가장 큰 부모이다.
     // page를 생성하고, 그 page를 attachTo()함수를 이용해 .document에 붙여 넣는 것이다.
-    this.img = new Image("https://picsum.photos/800/400", "Image Title");
-    this.img.attachTo(appRoot, "beforeend");
+
+    // 이미지 컴포넌트 추가
+    const img = new Image("https://picsum.photos/800/400", "Image Title");
+    img.attachTo(appRoot, "beforeend");
+
+    // 유튜브 추가
+    const youtube = new Youtube(
+      "Go Go Ukraine",
+      "https://www.youtube.com/embed/rOkIzvJJ1nY"
+    );
+    youtube.attachTo(appRoot, "beforeend");
 
     // Note 컴포넌트 추가
-    this.note = new Note("Hello World", "I want to No War");
-    this.note.attachTo(appRoot, "beforeend");
+    const note = new Note("Hello World", "I want to No War");
+    note.attachTo(appRoot, "beforeend");
+
+    // Todo 컴포넌트 추가
+    const todo = new Todo("This is Todo", "Todo Body");
+    todo.attachTo(appRoot, "beforeend");
   }
 }
 // 어플리케이션이 시작되면 App을 만들고, root인, document에 .document요소를 받아와서 App의 생성자 인자로 넣어준다.

@@ -1,7 +1,7 @@
 // 기본적으로, Dom 요소를 만들고, 어떤 Dom 요소에 어떤식으로 붙여나가면서 웹사이트 구성을 할 지 생각하자.
 // 그러면 어떤식으로 객체를 만들어야 하는지 구성이 대충 보인다.
 
-import { BaseComponent } from "../baseComponent.js";
+import { BaseComponent } from "../BaseComponent.js";
 
 // export class PageComponent {
 //   private element: HTMLUListElement; // 먼저 사용할 요소를 담을 메모리방을 설정해준다.
