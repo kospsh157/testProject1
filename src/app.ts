@@ -19,8 +19,8 @@ class App {
 
     // 유튜브 추가
     const youtube = new Youtube(
-      "Go Go Ukraine",
-      "https://www.youtube.com/embed/rOkIzvJJ1nY"
+      "Youtube Video",
+      "https://www.youtube.com/watch?v=CfPxlb8-ZQ0"
     );
     youtube.attachTo(appRoot, "beforeend");
 

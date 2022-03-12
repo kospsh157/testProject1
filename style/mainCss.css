@@ -1,7 +1,7 @@
 :root {
-  --bg-main-color: #0eb5f2;
+  --bg-main-color: /*#0eb5f2;*/ #00000080;
   --border-color: #f2c43d;
-  --document-bg-color: #3e9cbf;
+  --document-bg-color:/* #3e9cbf;*/ #68686850;
   --bg-accent-color: #f26d50;
   --smokeywhite: #dddbd8;
   --text-accent-color: #f17c37;
@@ -37,6 +37,7 @@ label {
 }
 
 body {
+  background: url("../assets/background.png") center/cover no-repeat;
   font-family: Roboto Oxygen, sans-serif;
   display: flex;
   justify-content: center; /* 가로 중앙 정렬 */
@@ -98,17 +99,18 @@ li {
 }
 
 .document {
+  overflow-y: auto;
   height: 100%;
   background-color: var(--document-bg-color);
   /* Firefox */
   scrollbar-width: 6px;
-  scrollbar-color: var(--bg-accent-color);
+  scrollbar-color: var(--document-bg-color);
   scrollbar-face-color: var(--bg-accent-color);
 }
 /*  파이어폭스는 바로 스크롤바에 대해 적용이 가능하지만, 사파리와 크롬에는 추가로 에프터 슈도로 추가해줘야 한다. */
 .document::-webkit-scrollbar {
   /* Safari and Chrome */
-  background-color: var(--bg-accent-color);
+  background-color: var(--document-bg-color);
   width: 6px;
 }
 

@@ -9,7 +9,7 @@ class App {
         this.page.attachTo(appRoot);
         const img = new Image("https://picsum.photos/800/400", "Image Title");
         img.attachTo(appRoot, "beforeend");
-        const youtube = new Youtube("Go Go Ukraine", "https://www.youtube.com/embed/rOkIzvJJ1nY");
+        const youtube = new Youtube("Youtube Video", "https://www.youtube.com/watch?v=CfPxlb8-ZQ0");
         youtube.attachTo(appRoot, "beforeend");
         const note = new Note("Hello World", "I want to No War");
         note.attachTo(appRoot, "beforeend");
