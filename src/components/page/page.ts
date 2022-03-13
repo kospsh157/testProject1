@@ -1,7 +1,7 @@
 // 기본적으로, Dom 요소를 만들고, 어떤 Dom 요소에 어떤식으로 붙여나가면서 웹사이트 구성을 할 지 생각하자.
 // 그러면 어떤식으로 객체를 만들어야 하는지 구성이 대충 보인다.
 
-import { BaseComponent } from "../BaseComponent.js";
+import { BaseComponent, Component } from "../BaseComponent.js";
 
 // export class PageComponent {
 //   private element: HTMLUListElement; // 먼저 사용할 요소를 담을 메모리방을 설정해준다.
@@ -21,8 +21,46 @@ import { BaseComponent } from "../BaseComponent.js";
 // }
 
 // Refactoring
-export class Page extends BaseComponent<HTMLElement> {
+export class Page extends BaseComponent<HTMLElement> implements Composable {
   constructor() {
-    super('<ul class="page">This is PageComponent</ul>');
+    super('<ul class="page"></ul>');
   }
+
+  addChild(section: Component) {
+    const item = new ItemPageComponent();
+    item.addChild(section);
+    item.attachTo(this.element, "beforeend");
+  }
+}
+
+// PageItemComponent
+export class ItemPageComponent
+  extends BaseComponent<HTMLElement>
+  implements Composable
+{
+  constructor() {
+    super(
+      '<li class="pageItem">\
+              <section class="pageItemBody"></section>\
+              <div class="pageItem">\
+                 <button class="close">&times;</button>\
+              </div>\
+          </li>'
+    );
+  }
+
+  addChild(child: Component) {
+    const container = this.element.querySelector(
+      ".pageItemBody"
+    )! as HTMLElement;
+    child.attachTo(container);
+  }
+}
+
+// Page클래스와, ItemPageComponent클래스에 각각 addChild()함수를 가지고 있다. 이것들을 인터페이스화 해서
+// 사용해보자
+// 이런 조립해서 사용하는 것에 쓰이는 함수들을 모아 인터페이스시켜서 사용하고 대체로 이름을 조립해서 사용하다는 뜻의
+// composable이라고 명명해서 쓴다.
+export interface Composable {
+  addChild(child: Component): void;
 }

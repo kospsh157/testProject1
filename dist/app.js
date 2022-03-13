@@ -8,13 +8,13 @@ class App {
         this.page = new Page();
         this.page.attachTo(appRoot);
         const img = new Image("https://picsum.photos/800/400", "Image Title");
-        img.attachTo(appRoot, "beforeend");
+        this.page.addChild(img);
         const youtube = new Youtube("Youtube Video", "https://www.youtube.com/watch?v=CfPxlb8-ZQ0");
-        youtube.attachTo(appRoot, "beforeend");
+        this.page.addChild(youtube);
         const note = new Note("Hello World", "I want to No War");
-        note.attachTo(appRoot, "beforeend");
+        this.page.addChild(note);
         const todo = new Todo("This is Todo", "Todo Body");
-        todo.attachTo(appRoot, "beforeend");
+        this.page.addChild(todo);
     }
 }
 new App(document.querySelector(".document"));

@@ -1,6 +1,6 @@
 // attachTo를 계속 사용하기 위해서 인터페이스로 따로 빼서 만들어 보자
 export interface Component {
-  attachTo(parent: HTMLElement, position: InsertPosition): void;
+  attachTo(parent: HTMLElement, position?: InsertPosition): void;
 }
 
 // 반복해서 나오는 것들을 모아서 부모 클래스로 만들고

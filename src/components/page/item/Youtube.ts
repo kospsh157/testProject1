@@ -24,7 +24,7 @@ export class Youtube extends BaseComponent<HTMLElement> {
   // embeded URL 식으로 바꿔서 리턴한다.
   private convertToURL(url: string): string {
     const regExp =
-      /^(?:https?:\/\/)?(?:www\.)?(?:(?:youtube.com\/(?:(?:watch\?v=)|(?:embed\/))([a-zA-Z0-9-]{11}))|(?:youtu.be\/([a-zA-Z0-9-]{11})))$/;
+      /^(?:https?:\/\/)?(?:www\.)?(?:(?:youtube.com\/(?:(?:watch\?v=)|(?: embed\/))([a-zA-Z0-9-]{11}))|(?:youtu.be\/([a-zA-Z0-9-]{11})))$/;
     const match = url.match(regExp);
     const videoId = match ? match[1] || match[2] : undefined;
     if (videoId) {
