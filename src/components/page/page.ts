@@ -30,14 +30,32 @@ export class Page extends BaseComponent<HTMLElement> implements Composable {
     const item = new ItemPageComponent();
     item.addChild(section);
     item.attachTo(this.element, "beforeend");
+
+    // page컴포넌트에서 item컴포넌트를 만들때 삭제 버튼 콜백함수를 넣어준다.
+    // setOnCloseBtnListener 함수는 인자로 들어온 함수를 자신의 맴버변수에 넣어주는 셋터 함수이다.
+    // 그리고 그 인자로는 콜백함수로써, 익명함수로 여기서 작성해서 들어간다.
+    item.setOnCloseBtnListener(() => {
+      item.removeFrom(this.element); // 여기있는 this는 Page HTML Element이다.
+      // 그리고 그것이 온전히 itempage에서 실행될때까지 연결된다.
+      // itempage컴포넌트는 하위 컴포넌트라 상위 컴포넌트의 객체 주소를 모른다.
+      // 따라서 이렇게 상위 컴포넌트에서 this로 바로 그냥 전달해주는 것이다.
+      // 햇갈리지 말아야 할 것이 있는데, 이렇게 넣어주는 this에는 이 값이 직접적으로 전달되지만,
+      // 상속을 통한 this는 무조건 그냥 자기자신이다.
+      // 따라서 이렇게 외부에서 하위컴포넌트의 멤버변수에 콜백함수를 넣어주는 이유가 여기에 this는 상속받는 this, 즉
+      // 자기 자신이 아니라, 상위 컴포넌트인 Page 오브젝트를 전달해줘야하기 때문이다.
+    });
   }
 }
 
+// BtnListener
+// 이 함수는 완전히 빈 껍데기용도로 쓰인는 함수이다. 나중에 부모쪽에서 익명함수을 바로 작성해서 넣는다.
+// 주의할 점은 => void를 써야 리턴 타입이 void가 된다. () => {}는 리턴타입이 {}이다.
+type OnCloseBtnListener = () => void;
+
 // PageItemComponent
-export class ItemPageComponent
-  extends BaseComponent<HTMLElement>
-  implements Composable
-{
+export class ItemPageComponent extends BaseComponent<HTMLElement> {
+  private onCloseBtnListener?: OnCloseBtnListener;
+
   constructor() {
     super(
       '<li class="pageItem">\
@@ -47,6 +65,10 @@ export class ItemPageComponent
               </div>\
           </li>'
     );
+    const closeBtn = this.element.querySelector(".close")! as HTMLButtonElement;
+    closeBtn.onclick = () => {
+      this.onCloseBtnListener && this.onCloseBtnListener();
+    };
   }
 
   addChild(child: Component) {
@@ -54,6 +76,10 @@ export class ItemPageComponent
       ".pageItemBody"
     )! as HTMLElement;
     child.attachTo(container);
+  }
+
+  setOnCloseBtnListener(callBackFunc: OnCloseBtnListener): void {
+    this.onCloseBtnListener = callBackFunc;
   }
 }
 
@@ -64,3 +90,20 @@ export class ItemPageComponent
 export interface Composable {
   addChild(child: Component): void;
 }
+
+// itemPageComponent에 삭제 버튼 리스너 달기
+/*  
+  1. 주인공들 
+    1. Component 인터페이스   1. Composable 인터페이스
+      1. baseComponent
+        1. Page 컴포넌트
+          1. itemPageComponent
+            1. 리스너와 콜백 함수
+  2. 리스너와 콜백 함수를 어디에 달아야 할 것인가? 
+  3. itemPage컴포넌트에 아이템을 생성해서 addChild()함수로 붙인다. 그리고
+  그것을 다시 page에 붙이는 방식으로 추가가된다. 
+  그리고 이것을 page, 즉 부모클래스에서 추가가 이뤄진다.
+  그럼 삭제도 부모에서 해야 되지 않을까? 
+  
+
+*/
