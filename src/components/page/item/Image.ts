@@ -33,7 +33,7 @@ export class Image extends BaseComponent<HTMLElement> {
   constructor(url: string, title: string) {
     super(
       '<section class="image"><div class="imageHolder">\
-      <img class= "imageThumbnail" /> </div><h2 class="imageTitle"></ h2> </section>'
+      <img class="imageThumbnail"/> </div><h2 class="imageTitle"></h2></section>'
     );
 
     const imageElement = this.element.querySelector(

@@ -23,6 +23,9 @@ export class BaseComponent<T extends HTMLElement> implements Component {
 
   // removeFrom()함수 실체는 여기에 있다. 그리고 이게 곧 콜백 함수의 실체 모습이다.
   removeFrom(parent: HTMLElement): void {
+    if (parent !== this.element.parentElement) {
+      throw new Error("parent miss match!");
+    }
     parent.removeChild(this.element);
   }
 }

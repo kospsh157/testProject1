@@ -21,13 +21,25 @@ import { BaseComponent, Component } from "../BaseComponent.js";
 // }
 
 // Refactoring
+
+// 이 타입이 의미하는 바는, ItemContainer 타입을 생성하는 모든 생성자는 다 이것과 매칭된다는 뜻이다.
+// 따라서 인터페이스로 받지 말고, 이런식으로 생성자를 넣어 줄 수 있다.
+// 이런 타입을, 생성자의 인자로써, 받는 구현체들은 모두 이런 타입에 대한 데이터를 다 받을 수 있다.
+type ItemContainerConstructor = {
+  new (): ItemContainer;
+};
+
 export class Page extends BaseComponent<HTMLElement> implements Composable {
-  constructor() {
+  // ItemContainer인터페이스 타입을 받는 것이 아니라, 그것을 생성시키는 생성자 타입을 하나 만들어서 그 타입을 넣어준다.
+  // 그러면 나중에 App에서 Page클래스를 사용할때, 생성자 인자로써 ItemContainer의 구현체를 넣는 것이 아니라, 그 구현체의 생성자를 넣어주는 것이다.
+  // 왜 이렇게 하는지는 모르겠다. 아마도 내 예상으로는, 인터페이스로 받게 되면, 인터페이스는 new키워드를 사용해서 생성할 수 없기 때문에 한번 더 꼬아서 생성자 타입을 만들어서 넣어주는것으로 파악된다.
+  constructor(private itemContainer: ItemContainerConstructor) {
     super('<ul class="page"></ul>');
   }
 
   addChild(section: Component) {
-    const item = new ItemPageComponent();
+    const item = new this.itemContainer();
+
     item.addChild(section);
     item.attachTo(this.element, "beforeend");
 
@@ -52,8 +64,22 @@ export class Page extends BaseComponent<HTMLElement> implements Composable {
 // 주의할 점은 => void를 써야 리턴 타입이 void가 된다. () => {}는 리턴타입이 {}이다.
 type OnCloseBtnListener = () => void;
 
+// PageItemComponent의 부모격이 되는 인터페이스를 작성하자. 그러면 나중에 다양한 종류의 PageItemComponent로
+// item들을 감싸서 Page에 추가할 수 있다.
+// 이는 Component, Composable 인터페이스를 구현해야 한다. (인터페이스끼리의 구현은 상속 키워드인 extends로 연결해준다. 타입스크립트는 기본적으로 다중상속을 지원하지 않는다.
+// 다만, 인터페이스 끼리는 얼마든지 다중상속이 가능하다.)
+
+// 기존의 쓰던 모든 api함수들은 Component, Composable에 있지만 클로즈 버튼의 콜백함수 셋터 함수는 없다. 따라서 여기서 정의해줘야 한다.
+// 인터페이스를 쓰는 이유는 이제 여러가지 버전의 itemContainer들을 사용할 계획이기 때문이다.
+interface ItemContainer extends Component, Composable {
+  setOnCloseBtnListener(callBackFunc: OnCloseBtnListener): void;
+}
+
 // PageItemComponent
-export class ItemPageComponent extends BaseComponent<HTMLElement> {
+export class ItemPageComponent
+  extends BaseComponent<HTMLElement>
+  implements ItemContainer
+{
   private onCloseBtnListener?: OnCloseBtnListener;
 
   constructor() {
@@ -90,20 +116,3 @@ export class ItemPageComponent extends BaseComponent<HTMLElement> {
 export interface Composable {
   addChild(child: Component): void;
 }
-
-// itemPageComponent에 삭제 버튼 리스너 달기
-/*  
-  1. 주인공들 
-    1. Component 인터페이스   1. Composable 인터페이스
-      1. baseComponent
-        1. Page 컴포넌트
-          1. itemPageComponent
-            1. 리스너와 콜백 함수
-  2. 리스너와 콜백 함수를 어디에 달아야 할 것인가? 
-  3. itemPage컴포넌트에 아이템을 생성해서 addChild()함수로 붙인다. 그리고
-  그것을 다시 page에 붙이는 방식으로 추가가된다. 
-  그리고 이것을 page, 즉 부모클래스에서 추가가 이뤄진다.
-  그럼 삭제도 부모에서 해야 되지 않을까? 
-  
-
-*/
