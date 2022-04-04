@@ -18,14 +18,15 @@ class App {
         this.page.addChild(todo);
         const imageBtn = document.querySelector("#newImage");
         imageBtn.addEventListener("click", () => {
-            console.log("이미지 버튼 클릭");
             const dialog = new Dialog();
-            dialog.setCloseBtn = () => {
+            dialog.setCloseBtn(() => {
+                console.log("닫기 버튼 클릭");
                 dialog.removeFrom(document.body);
-            };
-            dialog.setSubmitBtn = () => {
+            });
+            dialog.setSubmitBtn(() => {
+                console.log("ADD 버튼 클릭");
                 dialog.removeFrom(document.body);
-            };
+            });
             dialog.attachTo(document.body);
         });
     }

@@ -43,17 +43,19 @@ class App {
     // Image 버튼을 누르면, 다이얼로그 모달창이 뜨게하기.
     const imageBtn = document.querySelector("#newImage")! as HTMLButtonElement;
     imageBtn.addEventListener("click", () => {
-      console.log("이미지 버튼 클릭");
       const dialog = new Dialog();
       // dialog에 콜백함수 전달하기.
-      dialog.setCloseBtn = () => {
+      dialog.setCloseBtn(() => {
+        console.log("닫기 버튼 클릭");
         dialog.removeFrom(document.body);
-      };
-      dialog.setSubmitBtn = () => {
+      });
+
+      dialog.setSubmitBtn(() => {
         // 이미지 등록 처리하고 나서
         // 다이어로그창 없애기.
+        console.log("ADD 버튼 클릭");
         dialog.removeFrom(document.body);
-      };
+      });
 
       // 모달창이므로 Page 컴포넌트에 포함시키는게 아니라, 그냥 전체창으로 나타냈다가 기능을 다하면 사라지게 한다.
       dialog.attachTo(document.body);
