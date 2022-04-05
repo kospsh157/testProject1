@@ -9,13 +9,15 @@ export class Dialog extends BaseComponent<HTMLElement> implements Composable {
   private closeBtn?: closeListener;
   constructor() {
     super(
-      "<dialog class='dialog'>\
+      `<dialog class='dialog'>\
         <div class='dialogContainer'>\
           <button class='closeDialog'>&times;</button>\
-          <div class='dialogBody'></div>\
+          <div class='dialogBody'>\
+           
+          </div>\
           <button class='submitBtn'>ADD</button>\
         </div>\
-      </dialog>"
+      </dialog>`
     );
 
     const closeBtn = this.element.querySelector(

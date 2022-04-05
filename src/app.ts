@@ -5,6 +5,7 @@ import { Todo } from "./components/page/item/Todo.js";
 import { Youtube } from "./components/page/item/Youtube.js";
 import { Component } from "./components/BaseComponent.js";
 import { Dialog } from "./components/dialog/Dialog.js";
+import { MediaInput } from "./components/dialog/Input/MediaInput.js";
 
 // 이 파일은 스타트 포인트가 될 파일이다.
 class App {
@@ -22,8 +23,8 @@ class App {
     // page를 생성하고, 그 page를 attachTo()함수를 이용해 .document에 붙여 넣는 것이다.
 
     // 이미지 컴포넌트 추가
-    const img = new Image("https://picsum.photos/800/400", "Image Title");
-    this.page.addChild(img);
+    // const img = new Image("https://picsum.photos/800/400", "Image Title");
+    // this.page.addChild(img);
 
     // 유튜브 추가
     const youtube = new Youtube(
@@ -44,16 +45,20 @@ class App {
     const imageBtn = document.querySelector("#newImage")! as HTMLButtonElement;
     imageBtn.addEventListener("click", () => {
       const dialog = new Dialog();
+      const inputSection = new MediaInput();
+      dialog.addChild(inputSection);
+
       // dialog에 콜백함수 전달하기.
       dialog.setCloseBtn(() => {
-        console.log("닫기 버튼 클릭");
         dialog.removeFrom(document.body);
       });
 
       dialog.setSubmitBtn(() => {
         // 이미지 등록 처리하고 나서
+        const img = new Image(inputSection.url, inputSection.title);
+        this.page.addChild(img);
+
         // 다이어로그창 없애기.
-        console.log("ADD 버튼 클릭");
         dialog.removeFrom(document.body);
       });
 
