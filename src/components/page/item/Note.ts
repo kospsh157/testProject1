@@ -1,11 +1,11 @@
 import { BaseComponent } from "../../BaseComponent.js";
 
 export class Note extends BaseComponent<HTMLElement> {
-  constructor(title: string, body: string) {
+  constructor(title: string, body: HTMLParagraphElement) {
     super(
       '<section class="note">\
-        <h2 class="noteTitle"></h2>\
-        <p class="noteBody"></p>\
+        <h2 class="pageItemTitle noteTitle"></h2>\
+        <div class="noteBody"></div>\
     </section>'
     );
 
@@ -17,6 +17,6 @@ export class Note extends BaseComponent<HTMLElement> {
     const h2Body = this.element.querySelector(
       ".noteBody"
     )! as HTMLParagraphElement;
-    h2Body.textContent = body;
+    h2Body.appendChild(body);
   }
 }

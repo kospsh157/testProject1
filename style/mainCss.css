@@ -4,7 +4,14 @@
   --document-bg-color:/* #3e9cbf;*/ #68686850;
   --bg-accent-color: #f26d50;
   --smokeywhite: #dddbd8;
-  --text-accent-color: #f17c37;
+  --shadow-color: #202020;
+  --text-edit-bg-color: #575757;
+  --text-accent-color: #ffe498;
+  --component-bg-gradient: radial-gradient(
+    circle,
+    #646464e6 0%,
+    #363636e6 100%
+  );
 }
 
 html {
@@ -13,11 +20,11 @@ html {
 }
 
 p {
-  color: var(--smokeywhite);
+  color: white;
 }
 
 label {
-  color: var(--text-accent-color);
+  color: var(--smokeywhite);
 }
 
 * {
@@ -53,6 +60,20 @@ li {
   padding-left: 0;
 }
 
+button {
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+input,
+textarea {
+  background-color: var(
+    --text-edit-bg-color
+  ); /* 기본 흰색이 되는 바탕색을 회색으로 바꿈. */
+  color: var(--smokeywhite); /* 글자색을 이색으로 약간 회색빛이 나도록 바꿈*/
+  font-size: 1.5em;
+}
 .app {
   width: 100%;
   max-width: 1000px; /* 꽉찬 가로를 유지하다가, 1000px이 넘어가면 더이상 커지지 않는다. */
@@ -60,7 +81,32 @@ li {
   display: flex; /* 한 줄에 하나씩 나오도록  */
   flex-direction: column; /* 한 줄에 컬럼 하나씩 차지하도록 */
 }
+.createBtn:hover,
+.createBtn:focus {
+  cursor: pointer;
+  box-shadow: 3px 3px var(--shadow-color);
+}
 
+.document {
+  overflow-y: auto;
+  height: 100%;
+  background-color: var(--document-bg-color);
+  /* Firefox */
+  scrollbar-width: 6px;
+  scrollbar-color: var(--document-bg-color);
+  scrollbar-face-color: var(--bg-accent-color);
+}
+/*  파이어폭스는 바로 스크롤바에 대해 적용이 가능하지만, 사파리와 크롬에는 추가로 에프터 슈도로 추가해줘야 한다. */
+.document::-webkit-scrollbar {
+  /* Safari and Chrome */
+  background-color: var(--document-bg-color);
+  width: 6px;
+}
+
+.document::-webkit-scrollbar-thumb {
+  /* Safari and Chrome */
+  background-color: var(--bg-accent-color);
+}
 .footer {
   background: var(--bg-main-color); /* 해당 전체 요소의 배경색깔 */
   border-top: 1px solid var(--border-color);
@@ -84,7 +130,8 @@ li {
   justify-content: center; /* 가로 정렬이다. 여기서는 센터로 오도록 한다. */
 }
 
-.createBtn {
+.createBtn,
+.submitBtn {
   margin: 0.1em 0.2em; /* 2개의 밸류를 넣으면 첫번째 밸류가 top과 bottom이다. */
   text-align: center; /* 버튼 안에 글씨 중간 정렬 그러나 여기선 상속된것이 있어서 없어도 차이는 없음. */
   user-select: none; /* 사용자가 마우스로 드래깅을 할 수 없도록 방지함. */
@@ -98,28 +145,17 @@ li {
   border-radius: 2px; /* 모서리 부분을 둥글게 처리한다. */
 }
 
-.document {
-  overflow-y: auto;
-  height: 100%;
-  background-color: var(--document-bg-color);
-  /* Firefox */
-  scrollbar-width: 6px;
-  scrollbar-color: var(--document-bg-color);
-  scrollbar-face-color: var(--bg-accent-color);
-}
-/*  파이어폭스는 바로 스크롤바에 대해 적용이 가능하지만, 사파리와 크롬에는 추가로 에프터 슈도로 추가해줘야 한다. */
-.document::-webkit-scrollbar {
-  /* Safari and Chrome */
-  background-color: var(--document-bg-color);
-  width: 6px;
-}
-
-.document::-webkit-scrollbar-thumb {
-  /* Safari and Chrome */
-  background-color: var(--bg-accent-color);
+.submitBtn:hover,
+.submitBtn:focus {
+  cursor: pointer;
+  color: green;
 }
 
 /* Dialog window */
+dialog {
+  border: 0;
+}
+
 .dialog {
   display: flex;
   align-items: center; /* 세로 중앙정렬 */
@@ -131,20 +167,136 @@ li {
   width: 100%;
   height: 100%;
   font-size: 1.2rem;
-  background-color: var(--document-bg-color);
+  background-color: var(--bg-main-color);
 }
 
 .dialogContainer {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* 현재 이 container의 쌓아가는 방향을 결정한다. 주의할점으로는 내부 item에는 영향을 주지 않는다. */
+  /* 참고로 flex와 inline-flex가 있으며, flex는 수직방향으로 쌓이고, inline-flex는 수평방향으로 쌓인다. */
+  flex-direction: column; /* 내부 아이템의 쌓아가는 방향을 결정한다. */
   padding: 0.4em;
   width: 32em;
-  background: var(--bg-accent-color);
+  background: var(--bg-main-color);
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
+  box-shadow: 2px 2px 20px var(--bg-accent-color);
 }
 
-dialog {
-  border: 0;
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+/* close button, submit button */
+.close {
+  align-self: flex-end; /* 수평의 가장 끝쪽으로 가도록 한다. */
+  padding: 0.2rem;
+  color: var(--bg-accent-color);
+  font-size: 28px;
+  font-weight: bold;
+  margin: 3px;
+  transition: color 250ms ease; /* 칼라가 바뀌는 효과가 올때, 250ms초로 천천히 진행되게 한다. */
+}
+
+.close:hover,
+.close:focus {
+  /* 가상 선택자를 활용해서, 마우스가 올라갈때나 커서가 선택될때, 다음과 같은 효과를 주게 된다. */
+  transform: scale(1.5);
+  color: red;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.submitBtn {
+  align-self: flex-end;
+  padding: 0.5em 1.5em;
 }
 /* End Dialog Window */
+
+/* Pageitem */
+.pageItem {
+  margin: 1.5em;
+  display: flex;
+  justify-content: space-between; /* 아이템의 가로 공간을 정의함. 
+  space-between은 아이템을 가로의 양쪽 끝쪽으로 몰아 넣고 사이의 공간을 최대로 함.*/
+  align-items: center;
+  box-shadow: 2px 2px 6px var(--shadow-color);
+  background: var(--component-bg-gradient);
+}
+
+.pageItemControls {
+  padding-right: 0.5em;
+}
+
+.pageItemBody {
+  width: 100%;
+}
+
+.pageItemTitle {
+  color: var(--text-accent-color);
+}
+/* PageItem End */
+
+/* Image, Video */
+.youtube,
+.image {
+  display: flex;
+  width: 100%;
+  height: 250px;
+}
+
+.youtubePlayer,
+.imageHolder {
+  flex: 60% 1 1; /* flex 컨테이너 안에 있는 아이템들에게 부여할 수 있는 속성이다. 
+  /* flex: expand rate; reduce rate; default; */
+}
+
+.imageThumbnail {
+  width: 100%;
+  height: 100%;
+}
+
+.youtubeTitle,
+.imageTitle {
+  flex: 40% 1 1;
+  margin-left: 0.5em;
+}
+
+.youtubeIframe {
+  border: none;
+  width: 100%;
+  height: 100%;
+}
+/* Image, Video End */
+
+/* Note, Todo */
+.note {
+  padding: 0.5em;
+}
+.todo {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+
+  overflow-x: hidden;
+}
+
+.addMoreTodo,
+.todoConfirmBtn,
+.todoCancelBtn {
+  color: var(--smokeywhite);
+  text-shadow: 1px 1px var(--shadow-color);
+  transition: color 250ms ease;
+}
+.addMoreTodo:hover,
+.todoConfirmBtn:hover {
+  color: green;
+  cursor: pointer;
+}
+
+.todoCancelBtn:hover {
+  color: red;
+  cursor: pointer;
+}
+/* Note, Todo End */

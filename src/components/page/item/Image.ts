@@ -30,10 +30,14 @@
 // Refactoring
 import { BaseComponent } from "../../BaseComponent.js";
 export class Image extends BaseComponent<HTMLElement> {
-  constructor(url: string, title: string) {
+  constructor(title: string, url: string) {
     super(
-      '<section class="image"><div class="imageHolder">\
-      <img class="imageThumbnail"/> </div><h2 class="imageTitle"></h2></section>'
+      '<section class="image">\
+        <div div class= "imageHolder">\
+          <img class="imageThumbnail"/>\
+        </div>\
+        <h2 class= "pageItemTitle imageTitle"/>\
+      </section>'
     );
 
     const imageElement = this.element.querySelector(

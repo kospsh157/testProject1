@@ -3,9 +3,9 @@ import { BaseComponent } from "../../BaseComponent.js";
 export class Youtube extends BaseComponent<HTMLElement> {
   constructor(title: string, url: string) {
     super(
-      "<section>\
-            <div class='youtube'><iframe class='youtubeFrame'></iframe></div>\
-            <h3 class='youtubeTitle'></h3>\
+      "<section class='youtube'>\
+            <div class='youtubePlayer'><iframe class='youtubeIframe'></iframe></div>\
+            <h3 class='pageItemTitle youtubeTitle'></h3>\
          </section>"
     );
 
@@ -15,7 +15,7 @@ export class Youtube extends BaseComponent<HTMLElement> {
     youtubeTitle.textContent = title;
 
     const iFrame = this.element.querySelector(
-      ".youtubeFrame"
+      ".youtubeIframe"
     )! as HTMLIFrameElement;
     iFrame.src = this.convertToURL(url);
   }

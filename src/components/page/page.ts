@@ -86,7 +86,7 @@ export class ItemPageComponent
     super(
       '<li class="pageItem">\
               <section class="pageItemBody"></section>\
-              <div class="pageItem">\
+              <div class="pageItemControls">\
                  <button class="close">&times;</button>\
               </div>\
           </li>'
